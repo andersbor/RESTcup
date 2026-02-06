@@ -126,7 +126,7 @@ namespace RepositoryTest
         {
             CupsRepository repo = new CupsRepository(includeData: true);
 
-            bool removed = repo.Remove(2);
+            bool removed = repo.Delete(2);
 
             Assert.True(removed);
             Cup? fetched = repo.GetById(2);
@@ -141,7 +141,7 @@ namespace RepositoryTest
         {
             CupsRepository repo = new CupsRepository();
 
-            bool removed = repo.Remove(999);
+            bool removed = repo.Delete(999);
 
             Assert.False(removed);
         }
@@ -203,7 +203,7 @@ namespace RepositoryTest
             CupsRepository repo = new CupsRepository(includeData: true);
 
             // volumeAtLeast = 250 -> selects volumes > 250, so only 300
-            List<Cup> filtered = repo.Get(volumeAtLeast: 250).ToList();
+            List<Cup> filtered = repo.Get(minVolume: 250).ToList();
 
             int[] expected = new[] { 300 };
             int[] actual = filtered.Select((Cup c) => c.Volume).ToArray();
@@ -216,7 +216,7 @@ namespace RepositoryTest
             CupsRepository repo = new CupsRepository(includeData: true);
 
             // colorContains "e" matches Red, Green, Blue; volumeAtLeast 200 selects >200 -> 250 and 300
-            List<Cup> result = repo.Get(colorContains: "e", volumeAtLeast: 200, sortBy: "volumeDesc").ToList();
+            List<Cup> result = repo.Get(colorContains: "e", minVolume: 200, sortBy: "volumeDesc").ToList();
 
             int[] expectedVolumes = new[] { 300, 250 };
             string[] expectedColors = new[] { "Blue", "Red" };
@@ -232,7 +232,7 @@ namespace RepositoryTest
         {
             CupsRepository repo = new CupsRepository(includeData: true);
 
-            List<Cup> filtered = repo.Get(colorContains: "purple", volumeAtLeast: 1000).ToList();
+            List<Cup> filtered = repo.Get(colorContains: "purple", minVolume: 1000).ToList();
 
             Assert.Empty(filtered);
         }

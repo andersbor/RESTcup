@@ -15,40 +15,39 @@
             }
         }
 
-        public IEnumerable<Cup> Get(string? colorContains = null, int? volumeAtLeast = null,
+        public IEnumerable<Cup> Get(string? colorContains = null, int? minVolume = null,
             string? sortBy = null)
         {
-            IEnumerable<Cup> cups2 = new List<Cup>(cups);
+            IEnumerable<Cup> cupsResult = new List<Cup>(cups);
             if (colorContains is not null)
             {
-                cups2 = cups2.Where(cup =>
+                cupsResult = cupsResult.Where(cup =>
                     cup.Color != null
                  && cup.Color.Contains(colorContains, StringComparison.OrdinalIgnoreCase)
                  );
             }
-            if (volumeAtLeast is not null)
+            if (minVolume is not null)
             {
-                cups2 = cups2.Where(cup => cup.Volume > volumeAtLeast);
+                cupsResult = cupsResult.Where(cup => cup.Volume > minVolume);
             }
 
             switch (sortBy)
             {
                 case null:
-                    return cups2;
+                    return cupsResult;
                 case "color":
                 case "colorAsc":
-                    return cups2.OrderBy(cup => cup.Color);
+                    return cupsResult.OrderBy(cup => cup.Color);
                 case "colorDesc":
-                    return cups2.OrderByDescending(cup => cup.Color);
+                    return cupsResult.OrderByDescending(cup => cup.Color);
                 case "volume":
                 case "volumeAsc":
-                    return cups2.OrderBy(cup => cup.Volume);
+                    return cupsResult.OrderBy(cup => cup.Volume);
                 case "volumeDesc":
-                    return cups2.OrderByDescending(cup => cup.Volume);
+                    return cupsResult.OrderByDescending(cup => cup.Volume);
                 default:
                     throw new ArgumentException("Illegal sorting: " + sortBy);
             }
-
         }
 
         public Cup Add(Cup cup)
@@ -63,7 +62,7 @@
             return cups.FirstOrDefault(cup => cup.Id == id);
         }
 
-        public bool Remove(int id)
+        public bool Delete(int id)
         {
             Cup? cup = GetById(id);
             if (cup is null)
