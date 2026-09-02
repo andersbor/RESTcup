@@ -1,6 +1,12 @@
+using RESTcup.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Register CupsRepository as a singleton (seed data enabled)
+builder.Services.AddSingleton(new CupsRepository(includeData:true));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

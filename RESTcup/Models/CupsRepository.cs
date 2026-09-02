@@ -62,22 +62,23 @@
             return cups.FirstOrDefault(cup => cup.Id == id);
         }
 
-        public bool Delete(int id)
+        public Cup? Delete(int id)
         {
             Cup? cup = GetById(id);
             if (cup is null)
-                return false;
-            return cups.Remove(cup);
+                return null;
+            cups.Remove(cup);
+            return cup;
         }
 
-        public bool Update(Cup updatedCup)
+        public Cup? Update(int id, Cup updatedCup)
         {
-            Cup? existingCup = GetById(updatedCup.Id);
+            Cup? existingCup = GetById(id);
             if (existingCup is null)
-                return false;
+                return null;
             existingCup.Color = updatedCup.Color;
             existingCup.Volume = updatedCup.Volume;
-            return true;
+            return existingCup;
         }
     }
 }
