@@ -1,6 +1,6 @@
 ﻿namespace RESTcup.Models
 {
-    public class CupsRepository
+    public class CupsRepository : ICupsRepository
     {
         private int nextId = 1;
         private readonly List<Cup> cups = new();
