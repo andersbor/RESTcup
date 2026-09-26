@@ -1,3 +1,5 @@
+using RESTcup.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Add singleton for ICupsRepository to use CupsRepository with dependency injection
+builder.Services.AddSingleton<ICupsRepository>(new CupsRepositoryList(includeData: true));
 
 var app = builder.Build();
 
