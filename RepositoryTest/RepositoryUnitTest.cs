@@ -6,7 +6,7 @@ namespace RepositoryTest
     public class RepositoryUnitTest
     {
         // use database or list based repository for testing
-        private bool useDatabase = true;
+        private bool useDatabase = false;
 
         // use in-memory database or real database for testing
         private bool inMemoryDatabase = true;
